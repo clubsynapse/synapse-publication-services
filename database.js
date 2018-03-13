@@ -15,6 +15,8 @@
      console.log("Database connected");
  })
 
+ 
+
  database.log=function(){
     console.log(config);
  } 
