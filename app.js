@@ -1,29 +1,41 @@
 var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+//var path = require('path');
+//var logger = require('morgan');
+//var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var database = require('./database');
 
 var app = express();
 
-//database.log();
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
+
+var router = express.Router();
+
+//Managing /publications requests
+router.route('/')
+
+//The post request must have id, titre, auteur, contenu, themes, files, and forms attributes
+.post(function(req, res){
+  database
+})
+
+.get(function(req, res){
+  console.log(req);
+  database.getAllPublications(function(pubs){
+    console.log(req+" : OK");
+    res.json(pubs);
+  });
+})
+
+
+
+app.use('/publications', router);
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
-  next(err);
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  res.send(err);
 });
 
 module.exports = app;

@@ -53,7 +53,7 @@ CREATE TABLE commentaire(
 CREATE TABLE theme(
     id int,
     titre VARCHAR(50),
-    description_theme text,
+    description text,
     CONSTRAINT pk_theme PRIMARY KEY(id) 
 )engine=innodb;
 
@@ -90,6 +90,8 @@ CREATE TABLE fichier_publication(
     url VARCHAR(100),
     typefichier VARCHAR(20),
     publication VARCHAR(10),
+    CONSTRAINT fk_fic_pub FOREIGN KEY
+        (publication) REFERENCES publication(id),
     CONSTRAINT pk_form PRIMARY KEY(id,publication)
 )engine=innodb;
 
@@ -100,5 +102,7 @@ CREATE TABLE fichier_commentaire(
     typefichier VARCHAR(20),
     publication VARCHAR(10),
     commentaire int,
-    CONSTRAINT pk_form PRIMARY KEY(id,publication)
+    CONSTRAINT fk_fic_com_pub FOREIGN KEY
+        (publication) REFERENCES publication(id),
+    CONSTRAINT pk_form PRIMARY KEY(id,publication, commentaire)
 )engine=innodb;
