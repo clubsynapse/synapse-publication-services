@@ -16,7 +16,8 @@
  })
 
  /**
-  function used to execute a sql query
+  * Execute a query
+  @param {string} sql - The query to execute
   */
    doQery=function(sql, next){
         con.query(sql, function (err, result) {
@@ -228,7 +229,7 @@
                     pubs[i].nbVote = resvote.length; 
                     database.getSignalements(pubs[i].id, function(ressignal){
                         pubs[i].nbSignals = ressignal.length;
-                        database.getCommentaire(pubs[i].id, function(rescom){
+                        database.getCommentaires(pubs[i].id, function(rescom){
                             pubs[i].nbComments = rescom.length;
                             doQery(sqlform, function(resform){
                                 pubs[i].forms = resform;
@@ -275,7 +276,7 @@
                     pubs.nbVote = resvote.length; 
                     database.getSignalements(pubs.id, function(ressignal){
                         pubs.nbSignals = ressignal.length;
-                        database.getCommentaire(pubs.id, function(rescom){
+                        database.getCommentaires(pubs.id, function(rescom){
                             pubs.nbComments = rescom.length;
                             doQery(sqlform, function(resform){
                                 pubs.forms = resform;
@@ -308,7 +309,7 @@
     });
  }
 
- database.getCommentaire=function(pubID, next){
+ database.getCommentaires=function(pubID, next){
     let sql = "select id, contenu, datepub as date, heure, auteur"
     +" from commentaire"
     +" where publication ='"+pubID+"'";
@@ -330,7 +331,14 @@
     });
  }
 
- database.getRemarque=function(pubID, next){
+ database.getPublicationsNumber=function(next){
+     let sql = "select * from publication";
+     doQery(sql, function(res){
+         next(res.length);
+     })
+ }
+
+ database.getRemarques=function(pubID, next){
     let sql = "select auteur, contenu from remarque where publication = '"+pubID+"'";
     doQery(sql, next);
  }
