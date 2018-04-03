@@ -16,10 +16,11 @@
  })
 
  /**
-  * Execute a query
+  * Execute a sql query
   @param {string} sql - The query to execute
+  @param {requestCallback} next - Function to execute after query, take result as parameter
   */
-   doQery=function(sql, next){
+   doQuery=function(sql, next){
         con.query(sql, function (err, result) {
             if (err) throw err;
             next(result);
@@ -27,7 +28,9 @@
   }
 
   /**
-   * function used to add a theme to database
+   * Add a theme to database
+   * @param {Object} t - Theme object with id, titre and desc
+   * @param {requestCallback} next - Function to execute after adding theme, take result as parameter
    */
   database.addTheme=function(t, next){
       let sql = "insert into theme values ("
@@ -35,11 +38,12 @@
       +", '"+t.titre+"'"
       +", '"+t.desc+"'"
       +")";
-      doQery(sql, next);
+      doQuery(sql, next);
   }
 
   /**
-   * function used to add a publication to the database
+   * Add a publication to the database
+   * @param {Object} p - Publication object with id, titre, auteur, contenu, forms and files attributes
    */
  database.addPublication=function(p){
      let sql = "insert into publication(id, titre, auteur, contenu, active, datepub, heure) values ("+
@@ -58,7 +62,7 @@
                 +p.themes[i]
                 +", '"+p.id+"'"
                 +")";
-                doQery(sqltheme);
+                doQuery(sqltheme);
             }
         }
         if(p.files.length>0){
@@ -71,7 +75,7 @@
                 +", '"+p.files[i].type+"'"
                 +", '"+p.id+"'"
                 +")";
-                doQery(sqlfile);
+                doQuery(sqlfile);
             }
         }
         if(p.forms.length>0){
@@ -83,7 +87,7 @@
                 +", '"+p.forms[i].url+"'"
                 +", '"+p.id+"'"
                 +")";
-                doQery(sqlform);
+                doQuery(sqlform);
             }
         }
         return result;
@@ -91,7 +95,9 @@
  }
 
  /**
-  * function used to add a comment to the database"
+  * Add a comment to the database
+  * @param {string} pubID - ID of the commented publication
+  * @param {Object} c - Comment object with id, auteur, contenu and files
   */
  database.addComment=function(pubID,c){
     let sql = "insert into commentaire(id, auteur, contenu, publication, datepub, heure) values ("+
@@ -114,7 +120,7 @@
                 +", '"+pubID+"'"
                 +", '"+c.id+"'"
                 +")";
-                doQery(sql);
+                doQuery(sql);
             }
         }
         return result;
@@ -122,18 +128,25 @@
  }
 
  /**
-  * function used to add a vote form an user to database
+  * Add a vote form an user for a publication to database
+  * @param {string} userID - ID of the user
+  * @param {string} pubID - ID of the publication
+  * @param {requestCallback} next - Function to execute after adding vote, take result as parameter
   */
  database.addVote=function(userID, pubID, next){
     let sql = "insert into vote(userID, publication) values ("+
         "'"+userID+"',"+
         "'"+pubID+"'"+
     ")";
-    doQery(sql, next);
+    doQuery(sql, next);
  }
  
  /**
-  * function used to add remarque to database
+  * Add remarque to database
+  * @param {string} userID - ID of the user
+  * @param {string} pubID - ID of the publication
+  * @param {string} contenu - Content of the remarque
+  * @param {requestCallback} next - Function to execute after adding remarque, take result as parameter
   */
  database.addRemarque=function(userID, pubID,contenu, next){
     let sql = "insert into remarque(userID, publication, contenu) values ("+
@@ -141,11 +154,15 @@
         "'"+pubID+"',"+
         "'"+contenu+"'"
     ")";
-    doQery(sql, next);
+    doQuery(sql, next);
  }
  
  /**
-  * function used to add a publication signalment to db
+  * Add a publication signalment to db
+  * @param {string} userID - ID of the user
+  * @param {string} pubID - ID of the publication
+  * @param {string} contenu - Motive of the remarque
+  * @param {requestCallback} next - Function to execute after adding signalment, take result as parameter
   */
  database.addSignalment=function(userID, pubID,contenu, next){
     let sql = "insert into (userID, publication, raison) values ("+
@@ -153,59 +170,86 @@
         "'"+pubID+"',"+
         "'"+contenu+"'"
     ")";
-    doQery(sql, next);
+    doQuery(sql, next);
  }
 
  /**
-  * function used to update a theme on DB
+  * Update a theme on DB
+  * @param {Object} t - Theme object with id, titre and desc
+  * @param {requestCallback} next - Function to execute after updating, take result as parameter
   */
  database.updateTheme=function(t, next){
      let sql = "update theme set "
      +"title='"+t.titre+"'"
      +", description='"+t.desc+"'"
      +" where id = "+t.id;
-     doQery(sql, next);
+     doQuery(sql, next);
  }
 /**
- * function used to update publication title and content in DB
+ * Update publication title and content in DB
+ * @param {Object} p - Publication object with titre, contenu and id
+ * @param {requestCallback} next - Function to execute after updating oublication
  */
  database.updatePublicationContent=function(p, next){
      let sql = "update publication set "
      +"titre = '"+p.titre+"'"
      +", contenu = "+p.contenu+"'"
      +" where id = '"+p.id+"'";
-     doQery(sql, next);
+     doQuery(sql, next);
  }
 
  /**
-  * function used to set publication active or inactive on db
+  * Set publication active or inactive on db
+  * @param {string} pubID - ID of the pblication
+  * @param {boolean} active - Active or Inactive state
+  * @param {next} next - Function to execute after update, take result as parameter
   */
  database.updatePublicationState=function(pubID, active, next){
     let sql = "update publication set "
     +" active = '"+active+"'"
     +" where id = '"+pubID+"'";
-    doQery(sql, next);
+    doQuery(sql, next);
  }
 /**
- * function used to remove an user vote from database
- * @param {*ID of the user} userID 
- * @param {*ID of publication} pubID 
+ * Remove an user vote from database
+ * @param {string} userID - ID of the user
+ * @param {string} pubID - ID of publication
+ * @param {requestCallback} next - Function to execute after deletion, take result as parameter
  */
  database.deleteVote=function(userID, pubID, next){
      let sql = "delete from vote where "
      +" userID='"+userID+"'"
      +" and publication='"+pubID+"'";
-     doQery(sql, next);
+     doQuery(sql, next);
  }
 
+ /**
+  * Get all votes from a user
+  * @param {string} userID - ID of the user
+  * @param {requestCallback} next - Function to execute after getting votes, take result as parameter
+  */
  database.getUserVotes=function(userID, next){
      let sql = "select * from vote where userID ='"+userID+"'";
-     doQery(sql,next);
+     doQuery(sql,next);
  }
 
+ /**
+  * Get all votes for a publication
+  * @param {string} pubID - ID of publication
+  * @param {requestCallback} next - Function to execute after getting votes, take result as parameter
+  */
+ database.getPublicationVotes=function(pubID, next){
+    let sql = "select * from vote where publication ='"+pubID+"'";
+    doQuery(sql,next);
+}
+
+/**
+ * Get all publications
+ * @param {requestCallback} next - Function to execute after getting publications, take result as parameter
+ */
  database.getAllPublications=function(next){
     let sql = "select * from publication";
-    doQery(sql, function(res){
+    doQuery(sql, function(res){
         let pubs = res;
         for (let i = 0; i < pubs.length; i++) {
 
@@ -223,19 +267,19 @@
             +" from formulaire"
             +" where publication ='"+pubs[i].id+"'";
 
-            doQery(sqltheme, function(restheme){
+            doQuery(sqltheme, function(restheme){
                 pubs[i].themes=restheme;
-                doQery(sqlvote, function(resvote){
+                doQuery(sqlvote, function(resvote){
                     pubs[i].nbVote = resvote.length; 
                     database.getSignalements(pubs[i].id, function(ressignal){
                         pubs[i].nbSignals = ressignal.length;
                         database.getCommentaires(pubs[i].id, function(rescom){
                             pubs[i].nbComments = rescom.length;
-                            doQery(sqlform, function(resform){
+                            doQuery(sqlform, function(resform){
                                 pubs[i].forms = resform;
-                                doQery(sqlfic, function(resfic){
+                                doQuery(sqlfic, function(resfic){
                                     pubs[i].files = resfic;
-                                    if(i==pubs.length-1)
+                                        if(i==pubs.length-1)
                                         next(pubs);
                                 });
                             });
@@ -249,10 +293,14 @@
     });
  }
 
-
+ /**
+  * Get a publication with id
+  * @param {string} id - ID of publication
+  * @param {requestCallback} next - Function to execute after getting publication, take result as parameter
+  */
  database.getPublication=function(id, next){
     let sql = "select * from publication where id ='"+id+"'";
-    doQery(sql, function(res){
+    doQuery(sql, function(res){
         if(res.length==1){
             let pubs = res[0];
 
@@ -270,17 +318,17 @@
             +" from formulaire"
             +" where publication ='"+pubs.id+"'";
 
-            doQery(sqltheme, function(restheme){
+            doQuery(sqltheme, function(restheme){
                 pubs.themes=restheme;
-                doQery(sqlvote, function(resvote){
+                doQuery(sqlvote, function(resvote){
                     pubs.nbVote = resvote.length; 
                     database.getSignalements(pubs.id, function(ressignal){
                         pubs.nbSignals = ressignal.length;
                         database.getCommentaires(pubs.id, function(rescom){
                             pubs.nbComments = rescom.length;
-                            doQery(sqlform, function(resform){
+                            doQuery(sqlform, function(resform){
                                 pubs.forms = resform;
-                                doQery(sqlfic, function(resfic){
+                                doQuery(sqlfic, function(resfic){
                                     pubs.files = resfic;
                                     next(pubs);
                                 });
@@ -294,14 +342,23 @@
     });
  }
 
+ /**
+  * Get all themes from database
+  * @param {requestCallback} next - Function to execute after getting themes, take result as parameter
+  */
  database.getAllThemes=function(next){
     let sql = "select * from theme";
-    doQery(sql, next);
+    doQuery(sql, next);
  }
 
+ /**
+  * Get theme with id
+  * @param {string} id - ID of the theme
+  * @param {requestCallback} next - Function to execute after getting theme, take result as parameter
+  */
  database.getTheme=function(id, next){
     let sql = "select * from theme where id='"+id+"'";
-    doQery(sql, function(res){
+    doQuery(sql, function(res){
         if(res.length==1)
             next(res[0]);
         else
@@ -309,18 +366,23 @@
     });
  }
 
+ /**
+  * Get commentaires of a publication with publication ID
+  * @param {string} pubID - ID of the publication 
+  * @param {requestCallback} next - Function to execute after getting commentaires, take result as parameter
+  */
  database.getCommentaires=function(pubID, next){
     let sql = "select id, contenu, datepub as date, heure, auteur"
     +" from commentaire"
     +" where publication ='"+pubID+"'";
-    doQery(sql, function(res){
+    doQuery(sql, function(res){
         let coms = res;
         for(let i=0; i<coms.length; i++){
             sqlfic = "select id, titre, url, typefichier as type"
             +" from fichier_commentaire"
             +" where fichier_commentaire.publication = '"+pubID+"'"
             "       and fichier_commentaire.commentaire="+coms[i].id;
-            doQery(sqlfic, function(resfile){
+            doQuery(sqlfic, function(resfile){
                 coms[i].files = resfile;
                 if(i==coms.length-1)
                     next(coms);
@@ -331,21 +393,35 @@
     });
  }
 
+ /**
+  * Get number of publication
+  * @param {requestCallback} next - Function to execute after getting publication number, take result as parameter
+  */
  database.getPublicationsNumber=function(next){
      let sql = "select * from publication";
-     doQery(sql, function(res){
+     doQuery(sql, function(res){
          next(res.length);
      })
  }
 
+ /**
+  * Get remarques with publication id
+  * @param {string} pubID - ID of publication
+  * @param {requestCallback} next - Function to execute after getting remarques, take result as parameter
+  */
  database.getRemarques=function(pubID, next){
     let sql = "select auteur, contenu from remarque where publication = '"+pubID+"'";
-    doQery(sql, next);
+    doQuery(sql, next);
  }
 
+ /**
+  * Get signalment of a publication
+  * @param {string} pubID - ID of publication
+  * @param {requestCallback} next - Function to execute after getting signalments, take result as parameter
+  */
  database.getSignalements=function(pubID, next){
     let sql = "select userID, raison from signalement where publication = '"+pubID+"'";
-    doQery(sql, next);
+    doQuery(sql, next);
  }
 
  module.exports = database; 

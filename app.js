@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 var router = express.Router();
 
 //Managing /publications requests
+
 router.route('/publications')
 
 //The post request must have titre, auteur, contenu, themes, files, and forms attributes
