@@ -1,27 +1,64 @@
+/**
+ * @file Endpoints management
+ * @author MZ
+ */
+
 var express = require('express');
-//var path = require('path');
-//var logger = require('morgan');
-//var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var database = require('./database');
 
 var app = express();
 
+//Add bodyparser to server
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
+//router of the server
 var router = express.Router();
 
-//Managing /publications requests
+//Managing /publications and /forum requests
 
 router.route('/publications')
+
+//The post request must have titre, auteur, contenu, themes attributes
+/**
+ * Add new publication
+ * @name Adding new publication
+ * @path {POST} /publications
+ * @body {string} titre Title of publication
+ * @body {string} auteur ID of publication author
+ * @body {string} contenu Content of publication
+ * @body {number[]} themes Array containing IDs of publication theme 
+ */
+.post(function(req, res){
+  let pub = req.body;
+  database.getPublicationsNumber(function(nb){
+    let nbr = 9-String(++nb).length; 
+    pub.id = "P"+"0".repeat(nbr)+nb;
+    database.addPublication(pub);
+  });
+})
+
+/**
+ * Get publications
+ */
+.get(function(req, res){
+  //console.log(req);
+  database.getAllPublications(function(pubs){
+    let theme = req.params('theme');
+    //console.log(req+" : OK");
+    res.json(pubs);
+  });
+});
+
+router.route('/forum')
 
 //The post request must have titre, auteur, contenu, themes, files, and forms attributes
 .post(function(req, res){
   let pub = req.body;
   database.getPublicationsNumber(function(nb){
     let nbr = 9-String(++nb).length; 
-    pub.id = "P"+"0".repeat(nbr)+nb;
+    pub.id = "F"+"0".repeat(nbr)+nb;
     database.addPublication(pub);
   });
 })
