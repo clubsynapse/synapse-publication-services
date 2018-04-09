@@ -48,7 +48,7 @@ router.use(function(req, res, next){
         req.user={};
         req.user.id = decoded.id || decoded.profile.id;
         req.user.type = decoded.type;
-        console.log(req.body);
+        //console.log(req.body);
         next();
       }
     });
@@ -73,16 +73,22 @@ router.route('/publications')
  */
 .post(function(req, res){
   let pub = req.body;
-  var themes = pub.themes || [];
-  if(themes!=[])
-    themes = themes.split(',');
-  database.getPublicationsNumber(function(nb){
-    let nbr = 9-String(++nb).length; 
-    let id = "P"+"0".repeat(nbr)+nb;
-    database.addPublication(id, pub.title, req.user.id, pub.content, themes, function(result){
-      queryResult(result, res);
+  if(pub.title && pub.content){
+    var themes = pub.themes || "";
+    if(themes!="")
+      themes = themes.split(',');
+    else
+      theme = [];
+    database.getPublicationsNumber(function(nb){
+      let nbr = 9-String(++nb).length; 
+      let id = "P"+"0".repeat(nbr)+nb;
+      database.addPublication(id, pub.title, req.user.id, pub.content, themes, function(result){
+        queryResult(result, res);
+      });
     });
-  });
+  }else{
+    res.json({success : false, message : 'Publication title or content undefined'});
+  }
 })
 
 /**
@@ -98,36 +104,71 @@ router.route('/publications')
   //console.log(req);
   let type = "P";
   let keyword = req.query.keyword || req.body.keyword || "";
-  let theme = req.query.theme || req.body.thme;
+  let theme = req.query.theme || req.body.theme;
   if(theme){
     database.getThemePublications(type, keyword, theme, function(result){
       res.json(result);
     })
   }else{
     database.getAllPublications(type, keyword, function(result){
-      res.json(result);
+      res.json({success : true, result : result});
     })
   }
 });
 
 router.route('/forum')
 
-//The post request must have titre, auteur, contenu, themes, files, and forms attributes
+/**
+ * Add new forum publication
+ * @name Adding new forum publication
+ * @path {POST} /forum
+ * @body {string} title Title of publication
+ * @body {string} content Content of publication
+ * @body {string} themes Array containing IDs of publication theme 
+ */
 .post(function(req, res){
   let pub = req.body;
-  database.getPublicationsNumber(function(nb){
-    let nbr = 9-String(++nb).length; 
-    pub.id = "F"+"0".repeat(nbr)+nb;
-    database.addPublication(pub);
-  });
+  if(pub.title && pub.content){
+    var themes = pub.themes || "";
+    if(themes!="")
+      themes = themes.split(',');
+    else
+      theme = [];
+    database.getPublicationsNumber(function(nb){
+      let nbr = 9-String(++nb).length; 
+      let id = "F"+"0".repeat(nbr)+nb;
+      database.addPublication(id, pub.title, req.user.id, pub.content, themes, function(result){
+        queryResult(result, res);
+      });
+    });
+  }else{
+    res.json({success : false, message : 'Publication title or content undefined'});
+  }
 })
 
+/**
+ * Get all forum publications (with optional theme and keyword parameter)
+ * @name Getting all forum publications
+ * @path {string} /forum
+ * @query {string} theme ID of theme related to publications(optional)
+ * @query {string} keyword Keyword to search in publication(optional)
+ * @body {string} theme ID of theme related to publications(optional)
+ * @body {string} keyword Keyword to search in publication(optional
+ */
 .get(function(req, res){
   //console.log(req);
-  database.getAllPublications(function(pubs){
-    //console.log(req+" : OK");
-    res.json(pubs);
-  });
+  let type = "F";
+  let keyword = req.query.keyword || req.body.keyword || "";
+  let theme = req.query.theme || req.body.theme;
+  if(theme){
+    database.getThemePublications(type, keyword, theme, function(result){
+      res.json(result);
+    })
+  }else{
+    database.getAllPublications(type, keyword, function(result){
+      res.json({success : true, result : result});
+    })
+  }
 });
 
 router.route('/publications/:pubID')
@@ -140,7 +181,7 @@ router.route('/publications/:pubID')
 .get(function(req, res){
   database.getPublication(req.params.pubID, function(pub){
     if(pub){
-      res.json(pub);
+      res.json({success : true, result : pub});
     }else{
       res.status(404).json({success : faise, message : "Publication not fount"});
     }
@@ -220,20 +261,20 @@ router.route('/publications/:pubID/comments')
 })
 /**
  * Get all comments of a publication
- * @name Get commentq
+ * @name Get comments
  * @path {GET} /publications/:pubID/comments
  * @params {string} pubID ID of the publication
  */
 .get(function(req, res){
   database.getComments(req.params.pubID, function(coms){
-    res.json(coms);
+    res.json({success : true, result : coms});
   })
 });
 
 router.route('/publications/:pubID/comments/:comID')
 /**
  * Update a comment
- * @name Uodate comment
+ * @name Update comment
  * @path {PUT} /publications/:pubID/comments/:comID
  * @params {string} pubID ID of the publication
  * @params {string} comID ID of the comment
@@ -305,8 +346,8 @@ router.route('/publications/:pubID/observations')
  * @params {string} pubID ID of publication
  */
 .get(function(req, res){
-  database.getRemarques(req.params.pubID, function(rems){
-    res.json(rems);
+  database.getObservations(req.params.pubID, function(rems){
+    res.json({success : true, result : rems});
   })
 });
 
@@ -333,7 +374,7 @@ router.route('/publications/:pubID/reports')
  */
 .get(function(req, res){
   database.getReports(req.params.pubID, function(result){
-    res.json(result);
+    res.json({success : true, result : result});
   })
 });
 
@@ -350,9 +391,13 @@ router.route('/theme')
 .post(function(req, res){
   if(req.user.type=="admin"){
     let theme  = req.body;
-    database.addTheme(theme.title, theme.description, function(result){
-    queryResult(result, res);
-  });
+    if(theme.title && theme.content){
+      database.addTheme(theme.title, theme.description, function(result){
+        queryResult(result, res);
+      });
+    }else{
+      res.json({success : false, message : 'Title or content undefined'});
+    }
   }else{
     res.status(403).json({success : false, message : "Acces not allowed"});
   }
@@ -366,7 +411,7 @@ router.route('/theme')
  */
 .get(function(req, res){
   database.getAllThemes(function(themes){
-    res.json(themes);
+    res.json({success : true, result : themes});
   })
 });
 
@@ -374,7 +419,7 @@ router.route('/theme/:themeID')
 
 .get(function(req, res){
   database.getTheme(req.params.themeID, function(theme){
-    res.json(theme);
+    res.json({success : true, result : theme});
   })
 })
 
@@ -412,9 +457,15 @@ router.route('/votes/:pubID')
  * @params {string} pubID ID of the publication
  */
 .post(function(req, res){
-    database.addVote(req.user.id, req.params.pubID, function(result){
-      queryResult(result, res);
-    });
+    database.getVote(req.user.id, req.params.pubID, function(voted){
+      if(!voted){
+        database.addVote(req.user.id, req.params.pubID, function(result){
+          queryResult(result, res);
+        });
+      }else{
+        res.json({success : false, message : 'User already voted for this'});
+      }
+    })
 })
 
 /**
@@ -425,7 +476,7 @@ router.route('/votes/:pubID')
  */
 .get(function(req, res){
   database.getPublicationVotes(req.params.pubID, function(result){
-    res.json(result);
+    res.json({success : true, result : result});
   })
 })
 
@@ -450,7 +501,7 @@ router.route('/votes')
  */
 .get(function(req, res){
   database.getUserVotes(req.user.id, function(votes){
-    res.json(votes);
+    res.json({success : true, result : votes});
   })
 });
 
@@ -459,9 +510,7 @@ router.route('/votes')
 app.use('/', router);
 
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  res.send(err);
+  res.status(404).json({success : false, message : 'Not found'});
 });
 
 module.exports = app;

@@ -23,7 +23,8 @@
    doQuery=function(sql, next){
         con.query(sql, function (err, result) {
             if (err) console.log(err);
-            next(result);
+            if(next)
+                next(result);
         });
   }
 
@@ -37,7 +38,7 @@
   database.addTheme=function(title, desc, next){
       let sql = "insert into theme(title, description) values ("
       +" '"+title+"'"
-      +", '"+desc+"'"
+      +", \""+desc+"\""
       +")";
       doQuery(sql, next);
   }
@@ -71,9 +72,9 @@
  database.addPublication=function(id, title, user, content, themes, next){     
      let sql = "insert into publication(id, title, user, content, active, date, time) values ("+
         "'"+id+"',"+
-        "'"+title+"',"+
+        "\""+title+"\","+
         "'"+user+"',"+
-        "'"+content+"',"+
+        "\""+content+"\","+
         "true,now(),now()"+
      ")";
      con.query(sql, function (err, result) {
@@ -103,10 +104,10 @@
   */
  database.addComment=function(content, user, pubID, next){
     let sql = "insert into comment(user, content, publication, date, time) values ("+
-        "'"+user+"',"+
-        "'"+content+"',"+
-        "'"+pubID+"',"
-        "now(),now()"+
+        ""+user+","+
+        " \""+content+"\","+
+        " '"+pubID+"',"+
+        " now(), now()"+
     ")";
     doQuery(sql, next);
  }
@@ -120,7 +121,7 @@
   */
  database.addVote=function(user, pubID, next){
     let sql = "insert into vote(user, publication) values ("+
-        "'"+user+"',"+
+        ""+user+","+
         "'"+pubID+"'"+
     ")";
     doQuery(sql, next);
@@ -136,10 +137,10 @@
   */
  database.addObservation=function(user, pubID,content, next){
     let sql = "insert into observation(user, publication, content) values ("+
-        "'"+user+"',"+
+        ""+user+","+
         "'"+pubID+"',"+
-        "'"+content+"'"
-    ")";
+        "\""+content+"\""
+    +")";
     doQuery(sql, next);
  }
  
@@ -153,10 +154,10 @@
   */
  database.addReport=function(user, pubID,content, next){
     let sql = "insert into report(user, publication, description) values ("+
-        "'"+user+"',"+
-        "'"+pubID+"',"+
-        "'"+content+"'"
-    ")";
+        ""+user+","+
+        " '"+pubID+"',"+
+        "\""+content+"\""
+    +")";
     doQuery(sql, next);
  }
 
@@ -170,8 +171,8 @@
   */
  database.updateTheme=function(id, title, desc, next){
      let sql = "update theme set "
-     +"title='"+title+"'"
-     +", description='"+desc+"'"
+     +"title=\""+title+"\""
+     +", description=\""+desc+"\""
      +" where id = "+id;
      doQuery(sql, next);
  }
@@ -185,8 +186,8 @@
  */
  database.updatePublicationContent=function(id, title, content, next){
      let sql = "update publication set "
-     +"title = '"+title+"'"
-     +", content = "+content+"'"
+     +"title = \""+title+"\""
+     +", content = \""+content+"\""
      +" where id = '"+id+"'";
      doQuery(sql, next);
  }
@@ -200,7 +201,7 @@
   */
  database.updatePublicationState=function(pubID, active, next){
     let sql = "update publication set "
-    +" active = '"+active+"'"
+    +" active = "+active+""
     +" where id = '"+pubID+"'";
     doQuery(sql, next);
  }
@@ -215,7 +216,7 @@
   */
  database.UpdateComment=function(id, content, pubID, next){
      let sql = "update comment set "
-     +" content = '"+content+"'"
+     +" content = \""+content+"\""
      +" where id = "+id
      +" and publication = '"+pubID+"'";
      doQuery(sql, next);
@@ -296,7 +297,8 @@
  */
  database.getAllPublications=function(typePub, keyword, next){
     let sql = "select * from publication"
-    + " where id like '"+typePub+"%'"
+    + " where id like '"+typePub+"%'"    
+    +" and active=true";
     +" and (upper(title) like upper('%"+keyword+"%') or upper(content) like upper('%"+keyword+"%'))"
     +" order by date desc "
     +", time desc";
@@ -308,9 +310,9 @@
             +" from theme join theme_publication"
             +" on theme.id=theme_publication.theme"
             +" where theme_publication.publication='"+pubs[i].id+"'";
-            let sqlvote = "select * as nbvote"
+            let sqlvote = "select * "
             +" from vote" 
-            +" where publication ='"+pubs[i].id+"'";
+            +" where publication ='"+pubs[i].id+"'"
             
             doQuery(sqltheme, function(restheme){
                 pubs[i].themes=restheme;
@@ -346,6 +348,7 @@ database.getThemePublications=function(typePub, keyword, theme, next){
     +" from publication join theme_publication"
     +" on publication.id=theme_publication.publication"
     + " where id like '"+typePub+"%'"
+    +" and active=1"
     +" and theme_publication.theme = "+theme
     +" and (upper(title) like upper('%"+keyword+"%') or upper(content) like upper('%"+keyword+"%'))"
     +" order by date desc "
@@ -360,7 +363,8 @@ database.getThemePublications=function(typePub, keyword, theme, next){
             +" where theme_publication.publication='"+pubs[i].id+"'";
             let sqlvote = "select * "
             +" from vote" 
-            +" where publication ='"+pubs[i].id+"'";
+            +" where publication ='"+pubs[i].id+"'"
+            +" and active=true";
             
             doQuery(sqltheme, function(restheme){
                 pubs[i].themes=restheme;
@@ -475,12 +479,12 @@ database.getThemePublications=function(typePub, keyword, theme, next){
   * @return {object} Comment object with id, content, date as date, time, user attributes
   */
  database.getComment=function(id, next){
-    let sql = "select id, content, date as date, time, user"
+    let sql = "select id, content, date, time, user"
     +" from comment"
     +" where id ='"+id+"'"
     doQuery(sql, function(res){
         if(res.length==1)
-            next(res);
+            next(res[0]);
         else
             next(null);
     });
@@ -509,6 +513,26 @@ database.getThemePublications=function(typePub, keyword, theme, next){
  database.getObservations=function(pubID, next){
     let sql = "select user, content from observation where publication = '"+pubID+"'";
     doQuery(sql, next);
+ }
+
+ /**
+  * Verify if a user voted for a publication
+  * @function getVote
+  * @param {string} userID - ID of the user
+  * @param {string} pubID - ID of publication
+  * @param {requestCallback} next - Function to execute after verification, take result as parameter
+  * @return {boolean} True if vote is present and else if not
+  */
+ database.getVote=function(userID, pubID, next){
+     let sql = "select * from vote"
+     +" where user = "+userID
+     +" and publication = '"+pubID+"'";
+     doQuery(sql,function(result){
+         if(result.length==1)
+            next(true);
+         else
+            next(false);
+     });
  }
 
  /**

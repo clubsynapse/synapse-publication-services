@@ -36,8 +36,7 @@ CREATE TABLE report(
     user int,
     publication VARCHAR(10),
     description text,
-    CONSTRAINT pk_signal PRIMARY KEY(user,publication),
-    CONSTRAINT fk_signal_pub FOREIGN KEY
+    CONSTRAINT fk_report_pub FOREIGN KEY
         (publication) REFERENCES publication(id)
 )engine=innodb;
 
@@ -53,7 +52,7 @@ CREATE TABLE observation(
     user int,
     publication VARCHAR(10),
     content text,
-    CONSTRAINT fk_rem_pub FOREIGN KEY
+    CONSTRAINT fk_obs_pub FOREIGN KEY
         (publication) REFERENCES publication(id)
 )engine=innodb;
 

@@ -126,36 +126,65 @@ router.route('/publications')
   //console.log(req);
   let type = "P";
   let keyword = req.query.keyword || req.body.keyword || "";
-  let theme = req.query.theme || req.body.thme;
+  let theme = req.query.theme || req.body.theme;
   if(theme){
     database.getThemePublications(type, keyword, theme, function(result){
       res.json(result);
     })
   }else{
     database.getAllPublications(type, keyword, function(result){
-      res.json(result);
+      res.json({success : true, result : result});
     })
   }
 });
 
 router.route('/forum')
 
-//The post request must have titre, auteur, contenu, themes, files, and forms attributes
+/**
+ * Add new forum publication
+ * @name Adding new forum publication
+ * @path {POST} /forum
+ * @body {string} title Title of publication
+ * @body {string} content Content of publication
+ * @body {string} themes Array containing IDs of publication theme 
+ */
 .post(function(req, res){
   let pub = req.body;
+  var themes = pub.themes || [];
+  if(themes!=[])
+    themes = themes.split(',');
   database.getPublicationsNumber(function(nb){
     let nbr = 9-String(++nb).length; 
-    pub.id = "F"+"0".repeat(nbr)+nb;
-    database.addPublication(pub);
+    let id = "F"+"0".repeat(nbr)+nb;
+    database.addPublication(id, pub.title, req.user.id, pub.content, themes, function(result){
+      queryResult(result, res);
+    });
   });
 })
 
+/**
+ * Get all forum publications (with optional theme and keyword parameter)
+ * @name Getting all forum publications
+ * @path {string} /forum
+ * @query {string} theme ID of theme related to publications(optional)
+ * @query {string} keyword Keyword to search in publication(optional)
+ * @body {string} theme ID of theme related to publications(optional)
+ * @body {string} keyword Keyword to search in publication(optional
+ */
 .get(function(req, res){
   //console.log(req);
-  database.getAllPublications(function(pubs){
-    //console.log(req+" : OK");
-    res.json(pubs);
-  });
+  let type = "F";
+  let keyword = req.query.keyword || req.body.keyword || "";
+  let theme = req.query.theme || req.body.theme;
+  if(theme){
+    database.getThemePublications(type, keyword, theme, function(result){
+      res.json(result);
+    })
+  }else{
+    database.getAllPublications(type, keyword, function(result){
+      res.json({success : true, result : result});
+    })
+  }
 });
 
 router.route('/publications/:pubID')
@@ -168,7 +197,7 @@ router.route('/publications/:pubID')
 .get(function(req, res){
   database.getPublication(req.params.pubID, function(pub){
     if(pub){
-      res.json(pub);
+      res.json({success : true, result : pub});
     }else{
       res.status(404).json({success : faise, message : "Publication not fount"});
     }
@@ -254,7 +283,7 @@ router.route('/publications/:pubID/comments')
  */
 .get(function(req, res){
   database.getComments(req.params.pubID, function(coms){
-    res.json(coms);
+    res.json({success : true, result : coms});
   })
 });
 
@@ -334,7 +363,7 @@ router.route('/publications/:pubID/observations')
  */
 .get(function(req, res){
   database.getRemarques(req.params.pubID, function(rems){
-    res.json(rems);
+    res.json({success : true, result : rems});
   })
 });
 
@@ -361,7 +390,7 @@ router.route('/publications/:pubID/reports')
  */
 .get(function(req, res){
   database.getReports(req.params.pubID, function(result){
-    res.json(result);
+    res.json({success : true, result : result});
   })
 });
 
@@ -394,7 +423,7 @@ router.route('/theme')
  */
 .get(function(req, res){
   database.getAllThemes(function(themes){
-    res.json(themes);
+    res.json({success : true, result : themes});
   })
 });
 
@@ -402,7 +431,7 @@ router.route('/theme/:themeID')
 
 .get(function(req, res){
   database.getTheme(req.params.themeID, function(theme){
-    res.json(theme);
+    res.json({success : true, result : theme});
   })
 })
 
@@ -453,7 +482,7 @@ router.route('/votes/:pubID')
  */
 .get(function(req, res){
   database.getPublicationVotes(req.params.pubID, function(result){
-    res.json(result);
+    res.json({success : true, result : result});
   })
 })
 
@@ -478,7 +507,7 @@ router.route('/votes')
  */
 .get(function(req, res){
   database.getUserVotes(req.user.id, function(votes){
-    res.json(votes);
+    res.json({success : true, result : votes});
   })
 });
 
@@ -487,9 +516,7 @@ router.route('/votes')
 app.use('/', router);
 
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  res.send(err);
+  res.status(404).json({success : false, message : 'Not found'});
 });
 
 module.exports = app;</code></pre>
@@ -502,13 +529,13 @@ module.exports = app;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html">Add comment</a></li><li><a href="global.html">Add observation to publication</a></li><li><a href="global.html">Add publication votes</a></li><li><a href="global.html">Add report of publication</a></li><li><a href="global.html">Adding new publication</a></li><li><a href="global.html">Adding new theme</a></li><li><a href="global.html">Delete comment</a></li><li><a href="global.html">Delete publication</a></li><li><a href="global.html">Deleting a vote</a></li><li><a href="global.html">Get a publication</a></li><li><a href="global.html">Get all reports of a publication</a></li><li><a href="global.html">Get commentq</a></li><li><a href="global.html">Get observations of publication</a></li><li><a href="global.html">Get publication votes</a></li><li><a href="global.html">Get user votes</a></li><li><a href="global.html">Getting all publications</a></li><li><a href="global.html">Getting theme list</a></li><li><a href="global.html#QueryResult">QueryResult</a></li><li><a href="global.html">Uodate comment</a></li><li><a href="global.html">Update publication</a></li><li><a href="global.html">Updating theme</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html">Add comment</a></li><li><a href="global.html">Add observation to publication</a></li><li><a href="global.html">Add publication votes</a></li><li><a href="global.html">Add report of publication</a></li><li><a href="global.html">Adding new forum publication</a></li><li><a href="global.html">Adding new publication</a></li><li><a href="global.html">Adding new theme</a></li><li><a href="global.html">Delete comment</a></li><li><a href="global.html">Delete publication</a></li><li><a href="global.html">Deleting a vote</a></li><li><a href="global.html">Get a publication</a></li><li><a href="global.html">Get all reports of a publication</a></li><li><a href="global.html">Get commentq</a></li><li><a href="global.html">Get observations of publication</a></li><li><a href="global.html">Get publication votes</a></li><li><a href="global.html">Get user votes</a></li><li><a href="global.html">Getting all forum publications</a></li><li><a href="global.html">Getting all publications</a></li><li><a href="global.html">Getting theme list</a></li><li><a href="global.html#QueryResult">QueryResult</a></li><li><a href="global.html">Uodate comment</a></li><li><a href="global.html">Update publication</a></li><li><a href="global.html">Updating theme</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Apr 09 2018 02:34:28 GMT+0000 (Temps universel coordonné)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Apr 09 2018 08:21:14 GMT+0000 (Temps universel coordonné)
 </footer>
 
 <script> prettyPrint(); </script>
