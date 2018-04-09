@@ -1,12 +1,6 @@
 # synapse-publication-services
 Synapse publication service
 
-
-Global {.page-title}
-======
-
-### Members {.subsection-title}
-
 #### (route) Add comment {#Add comment .name}
 
 ##### Route:
@@ -444,29 +438,3 @@ Source:
 
 [Home](index.html)
 ------------------
-
-### Global
-
--   [Add comment](global.html)
--   [Add observation to publication](global.html)
--   [Add publication votes](global.html)
--   [Add report of publication](global.html)
--   [Adding new publication](global.html)
--   [Adding new theme](global.html)
--   [Delete comment](global.html)
--   [Delete publication](global.html)
--   [Deleting a vote](global.html)
--   [Get a publication](global.html)
--   [Get all reports of a publication](global.html)
--   [Get commentq](global.html)
--   [Get observations of publication](global.html)
--   [Get publication votes](global.html)
--   [Get user votes](global.html)
--   [Getting all publications](global.html)
--   [Getting theme list](global.html)
--   [QueryResult](global.html#QueryResult)
--   [Uodate comment](global.html)
--   [Update publication](global.html)
--   [Updating theme](global.html)
-
-\
