@@ -298,7 +298,7 @@
  database.getAllPublications=function(typePub, keyword, next){
     let sql = "select * from publication"
     + " where id like '"+typePub+"%'"    
-    +" and active=true";
+    +" and active=true"
     +" and (upper(title) like upper('%"+keyword+"%') or upper(content) like upper('%"+keyword+"%'))"
     +" order by date desc "
     +", time desc";
@@ -363,8 +363,7 @@ database.getThemePublications=function(typePub, keyword, theme, next){
             +" where theme_publication.publication='"+pubs[i].id+"'";
             let sqlvote = "select * "
             +" from vote" 
-            +" where publication ='"+pubs[i].id+"'"
-            +" and active=true";
+            +" where publication ='"+pubs[i].id+"'";
             
             doQuery(sqltheme, function(restheme){
                 pubs[i].themes=restheme;
