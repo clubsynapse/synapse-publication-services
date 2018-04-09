@@ -391,7 +391,7 @@ router.route('/theme')
 .post(function(req, res){
   if(req.user.type=="admin"){
     let theme  = req.body;
-    if(theme.title && theme.content){
+    if(theme.title && theme.description){
       database.addTheme(theme.title, theme.description, function(result){
         queryResult(result, res);
       });

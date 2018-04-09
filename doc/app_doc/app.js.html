@@ -76,7 +76,7 @@ router.use(function(req, res, next){
         req.user={};
         req.user.id = decoded.id || decoded.profile.id;
         req.user.type = decoded.type;
-        console.log(req.body);
+        //console.log(req.body);
         next();
       }
     });
@@ -101,16 +101,22 @@ router.route('/publications')
  */
 .post(function(req, res){
   let pub = req.body;
-  var themes = pub.themes || [];
-  if(themes!=[])
-    themes = themes.split(',');
-  database.getPublicationsNumber(function(nb){
-    let nbr = 9-String(++nb).length; 
-    let id = "P"+"0".repeat(nbr)+nb;
-    database.addPublication(id, pub.title, req.user.id, pub.content, themes, function(result){
-      queryResult(result, res);
+  if(pub.title &amp;&amp; pub.content){
+    var themes = pub.themes || "";
+    if(themes!="")
+      themes = themes.split(',');
+    else
+      theme = [];
+    database.getPublicationsNumber(function(nb){
+      let nbr = 9-String(++nb).length; 
+      let id = "P"+"0".repeat(nbr)+nb;
+      database.addPublication(id, pub.title, req.user.id, pub.content, themes, function(result){
+        queryResult(result, res);
+      });
     });
-  });
+  }else{
+    res.json({success : false, message : 'Publication title or content undefined'});
+  }
 })
 
 /**
@@ -150,16 +156,22 @@ router.route('/forum')
  */
 .post(function(req, res){
   let pub = req.body;
-  var themes = pub.themes || [];
-  if(themes!=[])
-    themes = themes.split(',');
-  database.getPublicationsNumber(function(nb){
-    let nbr = 9-String(++nb).length; 
-    let id = "F"+"0".repeat(nbr)+nb;
-    database.addPublication(id, pub.title, req.user.id, pub.content, themes, function(result){
-      queryResult(result, res);
+  if(pub.title &amp;&amp; pub.content){
+    var themes = pub.themes || "";
+    if(themes!="")
+      themes = themes.split(',');
+    else
+      theme = [];
+    database.getPublicationsNumber(function(nb){
+      let nbr = 9-String(++nb).length; 
+      let id = "F"+"0".repeat(nbr)+nb;
+      database.addPublication(id, pub.title, req.user.id, pub.content, themes, function(result){
+        queryResult(result, res);
+      });
     });
-  });
+  }else{
+    res.json({success : false, message : 'Publication title or content undefined'});
+  }
 })
 
 /**
@@ -277,7 +289,7 @@ router.route('/publications/:pubID/comments')
 })
 /**
  * Get all comments of a publication
- * @name Get commentq
+ * @name Get comments
  * @path {GET} /publications/:pubID/comments
  * @params {string} pubID ID of the publication
  */
@@ -290,7 +302,7 @@ router.route('/publications/:pubID/comments')
 router.route('/publications/:pubID/comments/:comID')
 /**
  * Update a comment
- * @name Uodate comment
+ * @name Update comment
  * @path {PUT} /publications/:pubID/comments/:comID
  * @params {string} pubID ID of the publication
  * @params {string} comID ID of the comment
@@ -362,7 +374,7 @@ router.route('/publications/:pubID/observations')
  * @params {string} pubID ID of publication
  */
 .get(function(req, res){
-  database.getRemarques(req.params.pubID, function(rems){
+  database.getObservations(req.params.pubID, function(rems){
     res.json({success : true, result : rems});
   })
 });
@@ -407,9 +419,13 @@ router.route('/theme')
 .post(function(req, res){
   if(req.user.type=="admin"){
     let theme  = req.body;
-    database.addTheme(theme.title, theme.description, function(result){
-    queryResult(result, res);
-  });
+    if(theme.title &amp;&amp; theme.content){
+      database.addTheme(theme.title, theme.description, function(result){
+        queryResult(result, res);
+      });
+    }else{
+      res.json({success : false, message : 'Title or content undefined'});
+    }
   }else{
     res.status(403).json({success : false, message : "Acces not allowed"});
   }
@@ -469,9 +485,15 @@ router.route('/votes/:pubID')
  * @params {string} pubID ID of the publication
  */
 .post(function(req, res){
-    database.addVote(req.user.id, req.params.pubID, function(result){
-      queryResult(result, res);
-    });
+    database.getVote(req.user.id, req.params.pubID, function(voted){
+      if(!voted){
+        database.addVote(req.user.id, req.params.pubID, function(result){
+          queryResult(result, res);
+        });
+      }else{
+        res.json({success : false, message : 'User already voted for this'});
+      }
+    })
 })
 
 /**
@@ -529,13 +551,13 @@ module.exports = app;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html">Add comment</a></li><li><a href="global.html">Add observation to publication</a></li><li><a href="global.html">Add publication votes</a></li><li><a href="global.html">Add report of publication</a></li><li><a href="global.html">Adding new forum publication</a></li><li><a href="global.html">Adding new publication</a></li><li><a href="global.html">Adding new theme</a></li><li><a href="global.html">Delete comment</a></li><li><a href="global.html">Delete publication</a></li><li><a href="global.html">Deleting a vote</a></li><li><a href="global.html">Get a publication</a></li><li><a href="global.html">Get all reports of a publication</a></li><li><a href="global.html">Get commentq</a></li><li><a href="global.html">Get observations of publication</a></li><li><a href="global.html">Get publication votes</a></li><li><a href="global.html">Get user votes</a></li><li><a href="global.html">Getting all forum publications</a></li><li><a href="global.html">Getting all publications</a></li><li><a href="global.html">Getting theme list</a></li><li><a href="global.html#QueryResult">QueryResult</a></li><li><a href="global.html">Uodate comment</a></li><li><a href="global.html">Update publication</a></li><li><a href="global.html">Updating theme</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html">Add comment</a></li><li><a href="global.html">Add observation to publication</a></li><li><a href="global.html">Add publication votes</a></li><li><a href="global.html">Add report of publication</a></li><li><a href="global.html">Adding new forum publication</a></li><li><a href="global.html">Adding new publication</a></li><li><a href="global.html">Adding new theme</a></li><li><a href="global.html">Delete comment</a></li><li><a href="global.html">Delete publication</a></li><li><a href="global.html">Deleting a vote</a></li><li><a href="global.html">Get a publication</a></li><li><a href="global.html">Get all reports of a publication</a></li><li><a href="global.html">Get comments</a></li><li><a href="global.html">Get observations of publication</a></li><li><a href="global.html">Get publication votes</a></li><li><a href="global.html">Get user votes</a></li><li><a href="global.html">Getting all forum publications</a></li><li><a href="global.html">Getting all publications</a></li><li><a href="global.html">Getting theme list</a></li><li><a href="global.html#QueryResult">QueryResult</a></li><li><a href="global.html">Update comment</a></li><li><a href="global.html">Update publication</a></li><li><a href="global.html">Updating theme</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Apr 09 2018 08:21:14 GMT+0000 (Temps universel coordonné)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Apr 09 2018 14:10:28 GMT+0000 (Temps universel coordonné)
 </footer>
 
 <script> prettyPrint(); </script>
