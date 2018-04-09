@@ -22,7 +22,7 @@
   */
    doQuery=function(sql, next){
         con.query(sql, function (err, result) {
-            if (err) throw err;
+            if (err) console.log(err);
             next(result);
         });
   }
@@ -30,15 +30,13 @@
   /**
    * Add a theme to database
    * @function AddTheme
-   @param {string} id - ID of the theme
    @param {string} title - Title of the theme
    @param {string} desc - Description of the theme
    @param {requestCallback} next - Function to execute after adding theme, take result as parameter
    */
-  database.addTheme=function(id, title, desc, next){
-      let sql = "insert into theme(id, title, description) values ("
-      +id
-      +", '"+title+"'"
+  database.addTheme=function(title, desc, next){
+      let sql = "insert into theme(title, description) values ("
+      +" '"+title+"'"
       +", '"+desc+"'"
       +")";
       doQuery(sql, next);
@@ -67,10 +65,10 @@
    @param {string } title - Title of the publication
    @param {string} user - ID of the user who commented
    @param {string} content - Content of the publication
-   @param {string[]} themes - IDs of the themes related to publication
-   @param {requestCallback} - Function to execute after adding publication, take result as sparameter
+   @param {string} themes - IDs of the themes related to publication seperated by ','
+   @param {requestCallback} next- Function to execute after adding publication, take result as sparameter
    */
- database.addPublication=function(id, title, user, content, themes, next){
+ database.addPublication=function(id, title, user, content, themes, next){     
      let sql = "insert into publication(id, title, user, content, active, date, time) values ("+
         "'"+id+"',"+
         "'"+title+"',"+
@@ -98,15 +96,13 @@
  /**
   * Add a comment to the database
   @function AddComment
-  @param {string} id - ID of comment
   @param {string} content - Content of comment
   @param {string} user - ID of user who commented
   @param {string} pubID - ID of the commented publication
   @param {requestCallback} next - Function to execute after adding comment, take result as parameter
   */
- database.addComment=function(id, content, user, pubID, next){
-    let sql = "insert into comment(id, user, content, publication, date, time) values ("+
-        "'"+id+"',"+
+ database.addComment=function(content, user, pubID, next){
+    let sql = "insert into comment(user, content, publication, date, time) values ("+
         "'"+user+"',"+
         "'"+content+"',"+
         "'"+pubID+"',"
@@ -197,12 +193,12 @@
 
  /**
   * Set publication active or inactive on db
-  @function UpdatelicationState
+  @function UpdatePublicationState
   @param {string} pubID - ID of the pblication
   @param {boolean} active - Active or Inactive state
   @param {next} next - Function to execute after update, take result as parameter
   */
- database.updatelicationState=function(pubID, active, next){
+ database.updatePublicationState=function(pubID, active, next){
     let sql = "update publication set "
     +" active = '"+active+"'"
     +" where id = '"+pubID+"'";
@@ -242,14 +238,12 @@
  /**
   * Delete a comment
   @function DeleteComment
-  * @param {string} pubID - ID of the publication
   * @param {string} comID - ID of Comment
   * @param {requestCallback} next - Function to execute after deleting comment, take result as parameter
   */
- database.deleteComment=function(pubID, comID, next){
+ database.deleteComment=function(comID, next){
      let sql = "delete from comment "
-     +" where id = "+comID
-     +" and publication = '"+pubID+"'";
+     +" where id = "+comID;
      doQuery(sql, next);
  }
 
@@ -374,7 +368,7 @@ database.getThemePublications=function(typePub, keyword, theme, next){
                     pubs[i].nbVotes = resvote.length; 
                     database.getReports(pubs[i].id, function(resreport){
                         pubs[i].nbReports = resreport.length;
-                        database.getcomments(pubs[i].id, function(rescom){
+                        database.getComments(pubs[i].id, function(rescom){
                             pubs[i].nbComments = rescom.length;                            
                                 if(i==pubs.length-1)
                                     next(pubs);
@@ -415,7 +409,7 @@ database.getThemePublications=function(typePub, keyword, theme, next){
                     pubs.nbVotes = resvote.length; 
                     database.getReports(pubs.id, function(resreport){
                         pubs.nbReports = resreport.length;
-                        database.getcomments(pubs.id, function(rescom){
+                        database.getComments(pubs.id, function(rescom){
                             pubs.nbComments = rescom.length;
                                     next(pubs);
                         });
@@ -462,7 +456,7 @@ database.getThemePublications=function(typePub, keyword, theme, next){
   @param {requestCallback} next - Function to execute after getting comments, take result as parameter
   @return {object[]} List of comment objects with id, content, date as date, time, user attributes
   */
- database.getcomments=function(pubID, next){
+ database.getComments=function(pubID, next){
     let sql = "select id, content, date as date, time, user"
     +" from comment"
     +" where publication ='"+pubID+"'"
@@ -470,6 +464,25 @@ database.getThemePublications=function(typePub, keyword, theme, next){
     +", time desc";
     doQuery(sql, function(res){
             next(res);
+    });
+ }
+
+ /**
+  * Get comment from database
+  * @function getComment
+  * @param {string} id ID of comment
+  * @param {requestCallback} next Function to execute after getting comment, take result as parameter
+  * @return {object} Comment object with id, content, date as date, time, user attributes
+  */
+ database.getComment=function(id, next){
+    let sql = "select id, content, date as date, time, user"
+    +" from comment"
+    +" where id ='"+id+"'"
+    doQuery(sql, function(res){
+        if(res.length==1)
+            next(res);
+        else
+            next(null);
     });
  }
 

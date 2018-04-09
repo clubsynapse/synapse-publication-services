@@ -13,7 +13,7 @@ create table publication(
 ) engine=innodb;
 
 CREATE TABLE comment(
-    id int,
+    id int auto_increment,
     content text,
     date date,
     time time,
@@ -58,7 +58,7 @@ CREATE TABLE observation(
 )engine=innodb;
 
 CREATE TABLE theme(
-    id int,
+    id int auto_increment,
     title VARCHAR(50),
     description text,
     CONSTRAINT pk_theme PRIMARY KEY(id) 

@@ -1,0 +1,4 @@
+{
+    "JWTSecret" : "secretpass",
+    "port" : "8000"
+}

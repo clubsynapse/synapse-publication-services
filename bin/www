@@ -5,14 +5,16 @@
  */
 
 var app = require('../app');
+var fs = require('fs');
 var debug = require('debug')('synapse-publications:server');
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
-
-var port = normalizePort(process.env.PORT || '3000');
+var data = fs.readFileSync('config/appconf.json')
+var appConfig = JSON.parse(data);
+var port = normalizePort(process.env.PORT || appConfig.port || '3000');
 app.set('port', port);
 
 /**

@@ -1,0 +1,2220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Global</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Global</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="Add comment"><span class="type-signature">(route) </span>Add comment<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/publications/:pubID/comments</td>
+                            </tr>
+                            </table>
+                            Add a comment to a publication
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">content</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">Content of the comment</td>
+          </tr>
+          </table>
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">pubID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of the publication</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line204">line 204</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Add observation to publication"><span class="type-signature">(route) </span>Add observation to publication<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/publications/:pubID/observations</td>
+                            </tr>
+                            </table>
+                            Add an observation of a publication
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">content</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">Content of observation</td>
+          </tr>
+          </table>
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">pubID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of publication</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line288">line 288</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Add publication votes"><span class="type-signature">(route) </span>Add publication votes<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/votes/:pubID</td>
+                            </tr>
+                            </table>
+                            Add a vote for a publication
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">pubID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of the publication</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line408">line 408</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Add report of publication"><span class="type-signature">(route) </span>Add report of publication<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/publications/:pubID/reports</td>
+                            </tr>
+                            </table>
+                            Add a report of a publication
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">content</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">Content of the report</td>
+          </tr>
+          </table>
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">pubID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of publication</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line316">line 316</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Adding new publication"><span class="type-signature">(route) </span>Adding new publication<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/publications</td>
+                            </tr>
+                            </table>
+                            Add new publication
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">title</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">Title of publication</td>
+          </tr><tr>
+            <td class="name">content</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">Content of publication</td>
+          </tr><tr>
+            <td class="name">themes</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">Array containing IDs of publication theme</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line66">line 66</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Adding new theme"><span class="type-signature">(route) </span>Adding new theme<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/theme</td>
+                            </tr>
+                            </table>
+                            Add new theme
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">title</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">Title of the theme</td>
+          </tr><tr>
+            <td class="name">description</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">Description of the theme</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line343">line 343</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Delete comment"><span class="type-signature">(route) </span>Delete comment<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">DELETE</td>
+                            <td class="name last">/publications/:pubID/comments/:comID</td>
+                            </tr>
+                            </table>
+                            Delete a comment
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">pubID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of the publication</td>
+          </tr><tr>
+            <td class="name">comID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of the comment</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line261">line 261</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Delete publication"><span class="type-signature">(route) </span>Delete publication<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">DELETE</td>
+                            <td class="name last">/publications/:pubID</td>
+                            </tr>
+                            </table>
+                            Delete a publication
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">pubID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of publication</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line178">line 178</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Deleting a vote"><span class="type-signature">(route) </span>Deleting a vote<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">DELETE</td>
+                            <td class="name last">/votes/:pubID</td>
+                            </tr>
+                            </table>
+                            Delete a vote from a user for a publication
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">pubID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of the publication</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line432">line 432</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Get a publication"><span class="type-signature">(route) </span>Get a publication<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">Get</td>
+                            <td class="name last">/publications/:pubID</td>
+                            </tr>
+                            </table>
+                            Get a publication
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">pubID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of publication</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line134">line 134</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Get all reports of a publication"><span class="type-signature">(route) </span>Get all reports of a publication<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">GET</td>
+                            <td class="name last">/publications/:pubID/reports</td>
+                            </tr>
+                            </table>
+                            Get reports of a publication
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">pubID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of publication</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line328">line 328</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Get commentq"><span class="type-signature">(route) </span>Get commentq<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">GET</td>
+                            <td class="name last">/publications/:pubID/comments</td>
+                            </tr>
+                            </table>
+                            Get all comments of a publication
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">pubID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of the publication</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line221">line 221</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Get observations of publication"><span class="type-signature">(route) </span>Get observations of publication<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/publications/:pubID/observations</td>
+                            </tr>
+                            </table>
+                            Get all observations of a publication
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">pubID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of publication</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line301">line 301</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Get publication votes"><span class="type-signature">(route) </span>Get publication votes<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">GET</td>
+                            <td class="name last">/votes/:pubID</td>
+                            </tr>
+                            </table>
+                            Get all votes for a publication
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">pubID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of the publication</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line420">line 420</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Get user votes"><span class="type-signature">(route) </span>Get user votes<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">GET</td>
+                            <td class="name last">/votes</td>
+                            </tr>
+                            </table>
+                            Get all vote of user
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line446">line 446</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Getting all publications"><span class="type-signature">(route) </span>Getting all publications<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">string</td>
+                            <td class="name last">/publications</td>
+                            </tr>
+                            </table>
+                            Get all publications (with optional theme and keyword parameter)
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">theme</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of theme related to publications(optional)</td>
+          </tr><tr>
+            <td class="name">keyword</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">Keyword to search in publication(optional</td>
+          </tr>
+          </table>
+                            <h5>Query Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">theme</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of theme related to publications(optional)</td>
+          </tr><tr>
+            <td class="name">keyword</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">Keyword to search in publication(optional)</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Getting theme list"><span class="type-signature">(route) </span>Getting theme list<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">GET</td>
+                            <td class="name last">/theme</td>
+                            </tr>
+                            </table>
+                            Get all themes from database
+                            <h5>Response:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">List</td>
+            <td class="type">Array.<object></td>
+            
+            
+            <td class="description last">of theme objects with id, title and description</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line361">line 361</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Uodate comment"><span class="type-signature">(route) </span>Uodate comment<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">PUT</td>
+                            <td class="name last">/publications/:pubID/comments/:comID</td>
+                            </tr>
+                            </table>
+                            Update a comment
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">content</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">Content of the comment</td>
+          </tr>
+          </table>
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">pubID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of the publication</td>
+          </tr><tr>
+            <td class="name">comID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of the comment</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line234">line 234</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Update publication"><span class="type-signature">(route) </span>Update publication<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">PUT</td>
+                            <td class="name last">/publications/:pubID</td>
+                            </tr>
+                            </table>
+                            Update a publication
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">title</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">New title of publication</td>
+          </tr><tr>
+            <td class="name">content</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">New content of publication</td>
+          </tr>
+          </table>
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">pubID</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">ID of publication</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line150">line 150</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="Updating theme"><span class="type-signature">(route) </span>Updating theme<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">PUT</td>
+                            <td class="name last">/theme/:themeID</td>
+                            </tr>
+                            </table>
+                            Update a theme
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">title</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">New title of theme</td>
+          </tr><tr>
+            <td class="name">description</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">New description of theme</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line381">line 381</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="QueryResult"><span class="type-signature"></span>QueryResult<span class="signature">(result, res)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Process query result for database modifications
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>result</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Result object of the query</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Http response object</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html">Add comment</a></li><li><a href="global.html">Add observation to publication</a></li><li><a href="global.html">Add publication votes</a></li><li><a href="global.html">Add report of publication</a></li><li><a href="global.html">Adding new publication</a></li><li><a href="global.html">Adding new theme</a></li><li><a href="global.html">Delete comment</a></li><li><a href="global.html">Delete publication</a></li><li><a href="global.html">Deleting a vote</a></li><li><a href="global.html">Get a publication</a></li><li><a href="global.html">Get all reports of a publication</a></li><li><a href="global.html">Get commentq</a></li><li><a href="global.html">Get observations of publication</a></li><li><a href="global.html">Get publication votes</a></li><li><a href="global.html">Get user votes</a></li><li><a href="global.html">Getting all publications</a></li><li><a href="global.html">Getting theme list</a></li><li><a href="global.html#QueryResult">QueryResult</a></li><li><a href="global.html">Uodate comment</a></li><li><a href="global.html">Update publication</a></li><li><a href="global.html">Updating theme</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Apr 09 2018 02:34:28 GMT+0000 (Temps universel coordonné)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
