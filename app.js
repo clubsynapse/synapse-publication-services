@@ -46,7 +46,7 @@ router.use(function(req, res, next){
         return res.json({success : false, message : "token authentification failed"});
       }else{
         req.user={};
-        req.user.id = decoded.id || decoded.profile.id;
+        req.user.id = decoded.id || decoded.profile.id || 0;
         req.user.type = decoded.type;
         //console.log(req.body);
         next();
@@ -72,7 +72,7 @@ router.route('/publications')
  * @body {string} themes Array containing IDs of publication theme 
  */
 .post(function(req, res){
-  let pub = req.body;
+  var pub = req.body;
   if(pub.title && pub.content){
     var themes = pub.themes || "";
     if(themes!="")
@@ -80,11 +80,11 @@ router.route('/publications')
     else
       theme = [];
     database.getPublicationsNumber(function(nb){
-      let nbr = 9-String(++nb).length; 
-      let id = "P"+"0".repeat(nbr)+nb;
-      database.addPublication(id, pub.title, req.user.id, pub.content, themes, function(result){
-        queryResult(result, res);
-      });
+      var nbr = 9-String(++nb).length; 
+      var id = "P"+"0".repeat(nbr)+nb;
+        database.addPublication(id, pub.title, req.user.id, pub.content, themes, function(result){
+          queryResult(result, res);
+        });
     });
   }else{
     res.json({success : false, message : 'Publication title or content undefined'});
@@ -102,9 +102,9 @@ router.route('/publications')
  */
 .get(function(req, res){
   //console.log(req);
-  let type = "P";
-  let keyword = req.query.keyword || req.body.keyword || "";
-  let theme = req.query.theme || req.body.theme;
+  var type = "P";
+  var keyword = req.query.keyword || req.body.keyword || "";
+  var theme = req.query.theme || req.body.theme;
   if(theme){
     database.getThemePublications(type, keyword, theme, function(result){
       res.json(result);
@@ -127,7 +127,7 @@ router.route('/forum')
  * @body {string} themes Array containing IDs of publication theme 
  */
 .post(function(req, res){
-  let pub = req.body;
+  var pub = req.body;
   if(pub.title && pub.content){
     var themes = pub.themes || "";
     if(themes!="")
@@ -135,8 +135,8 @@ router.route('/forum')
     else
       theme = [];
     database.getPublicationsNumber(function(nb){
-      let nbr = 9-String(++nb).length; 
-      let id = "F"+"0".repeat(nbr)+nb;
+      var nbr = 9-String(++nb).length; 
+      var id = "F"+"0".repeat(nbr)+nb;
       database.addPublication(id, pub.title, req.user.id, pub.content, themes, function(result){
         queryResult(result, res);
       });
@@ -157,9 +157,9 @@ router.route('/forum')
  */
 .get(function(req, res){
   //console.log(req);
-  let type = "F";
-  let keyword = req.query.keyword || req.body.keyword || "";
-  let theme = req.query.theme || req.body.theme;
+  var type = "F";
+  var keyword = req.query.keyword || req.body.keyword || "";
+  var theme = req.query.theme || req.body.theme;
   if(theme){
     database.getThemePublications(type, keyword, theme, function(result){
       res.json(result);
@@ -200,7 +200,7 @@ router.route('/publications/:pubID')
   database.getPublication(req.params.pubID, function(pub){
     if(pub){
       if(pub.user==req.user.id){
-        let newPub = req.body;
+        var newPub = req.body;
         if(newPub.title && newPub.content){
           database.updatePublicationContent(req.params.pubID, newPub.title, newPub.content, function(result){
             queryResult(result, res);
@@ -250,7 +250,7 @@ router.route('/publications/:pubID/comments')
  * @body {string} content Content of the comment
  */
 .post(function(req, res){
-  let com = req.body.content;
+  var com = req.body.content;
     if(com){
       database.addComment(com, req.user.id, req.params.pubID, function(result){
         queryResult(result, res);
@@ -390,7 +390,7 @@ router.route('/theme')
  */
 .post(function(req, res){
   if(req.user.type=="admin"){
-    let theme  = req.body;
+    var theme  = req.body;
     if(theme.title && theme.description){
       database.addTheme(theme.title, theme.description, function(result){
         queryResult(result, res);
@@ -432,7 +432,7 @@ router.route('/theme/:themeID')
  */
 .put(function(req, res){
   if(req.user.type=="admin"){
-    let theme = req.body;
+    var theme = req.body;
     if(theme.title && theme.description){
       database.updateTheme(req.params.themeID, theme.title, theme.description, function(result){
         queryResult(result, res);
